@@ -1,3 +1,4 @@
+import { Brand } from "../brands/brand.model";
 import { Bicycle } from "./bicycle.model";
 
 export class BicycleService {
@@ -41,5 +42,16 @@ export class BicycleService {
 
   static async delete(bicycle: Bicycle) {
     await bicycle.destroy();
+  }
+
+  static async findEagerlyById(id: number) {
+    return Bicycle.findByPk(id, {
+      include : [
+        {
+          model: Brand,
+          as: "brand"
+        }
+      ]
+    });
   }
 }
